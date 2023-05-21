@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Syne">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Nyvex-Core Status Page</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+        <script>
+          fetch("https://nyvex-core.com/api/v3/website/get-status/", {
+            method: "GET"
+          })
+            .then(response => {
+              const siteStatusElement = document.getElementById("site-status");
+              const siteStatusIcon = document.getElementById("WebsiteWorkingIcon");
+
+              if (response.status === 200) {
+                siteStatusElement.textContent = "Working (" + response.status + ")";
+                siteStatusIcon.outerHTML = '<span style="color: rgb(21, 228, 17);" class="material-symbols-outlined">check_circle</span>'
+                siteStatusElement.style.color = "rgb(21, 228, 17)"
+
+              } else if (response.status === 503) {
+                siteStatusElement.textContent = "Service Under Maintenance";
+                siteStatusIcon.outerHTML = ' <span style="color: rgb(255, 103, 8);" class="material-symbols-outlined">engineering</span>'
+                siteStatusElement.style.color = "rgb(255, 103, 8)"
+
+               
+              } else {
+                siteStatusElement.textContent = "Not Working (" + response.status + ")";
+                siteStatusIcon.outerHTML = '<span style="color: rgb(227, 24, 24);" class="material-symbols-outlined">error</span>'
+                siteStatusElement.style.color = "rgb(227, 24, 24)"
+                
+              }
+            })
+            .catch(error => {
+              console.log("Error:", error);
+              const siteStatusElement = document.getElementById("site-status");
+              siteStatusElement.textContent = "Error";
+            });
+        </script>
+
+
+
+
+
+    <style>
+        body {
+            font-family: 'Syne', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .image-container {
+            text-align: center;
+            width: 100%;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+
+
+<body class="w3-white">
+    <!-- Image and name container. Change to your picture here. -->
+    <div class="image-container">
+        <img src="https://media.discordapp.net/attachments/923040595600089119/1091413540570661006/brackets_brackets_1-removebg-preview.png?width=449&height=449"
+            class="w3-margin" alt="Person" max-width="100%" height="150px" style="border-radius: 50%;">
+
+        <!-- Content. Add your bio here. -->
+        <div class="w3-margin">
+            <h2 class="w3-text-black"><strong>Nyvex-Core</strong></h2>
+            <p>Nyvex-Core Status</p>
+        </div>
+
+        <!-- Links section 1. Replace the # inside of the "" with your links. -->
+
+        <h3>Website</h3>
+
+
+
+        <div class="links-container">
+            <span id="WebsiteWorkingIcon" style="color: rgb(0, 0, 0);" class="material-symbols-outlined">
+                pending
+            </span><span  id="site-status">Please wait....</span>
+
+
+
+            
+            
+        </div>
+        <br></br>
+
+        <a href="" class="w3-button w3-hover-blue w3-large w3-black" style="width: 350px;"
+               onclick="location.reload(true)""></i>Refresh</a>
+               
+               <br></br>
+          <a href="https://discord.gg/ZYRREwcNUg" class="w3-button w3-hover-blue w3-large w3-black" style="width: 350px;"></i>Report outage on our Discord Server.</a>      
+
+        <!-- Add links to your social networks here. -->
+        <div class="w3-container w3-xlarge w3-padding w3-margin">
+            <i class="fa fa-facebook-official w3-hover-opacity"></i>
+            <i class="fa fa-instagram w3-hover-opacity"></i>
+            <i class="fa fa-linkedin w3-hover-opacity"></i>
+        </div>
+    </div>
+
+    <!-- The Contact Section -->
+    <div class="w3-container w3-content" style="max-width:390px" id="contact">
+        <h5 class="w3-center">Check our website (made with love 🥰)</h5>
+        
+    
+        <footer class="w3-container w3-center w3-padding-48">
+            <a class="w3-margin-bottom" href="https://nyvex-core.com/"
+                title="Our site" target="_blank">
+                <span class="material-symbols-outlined">
+language
+</span>
+            </a>
+            
+        </footer>
+    </div>
+
+</body>
+
+</html>
