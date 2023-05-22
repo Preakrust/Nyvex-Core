@@ -5,7 +5,6 @@
 const url = new URL(window.location.href);
 const queryParams = new URLSearchParams(url.search);
 
-const PathName = window.location.pathname;
 
 const FETCH = function (Callback) {
     fetch("https://nyvex-core.com/api/v3/users/@me/", {
@@ -18,7 +17,7 @@ const FETCH = function (Callback) {
 }
 
 const AccountFunctions = {
-    ["auth/v3/login/"]: function () {
+    ["https://nyvex-core.com/auth/v3/login/"]: function () {
         FETCH(function(UserInfo) {
             if (UserInfo.IsBanned == true) { //Prevent banned people from accessing the page
                 window.location.href = 'https://nyvex-core.com/e/banned/';
@@ -39,10 +38,10 @@ const AccountFunctions = {
     }
 }
 
-const SelectedAccountFunction = AccountFunctions[PathName];
+const SelectedAccountFunction = AccountFunctions[window.location.href];
 
 if (SelectedAccountFunction) {
     SelectedAccountFunction()
 } else {
-    console.error("Invalid Pathname")
+    console.error("Invalid url")
 }
