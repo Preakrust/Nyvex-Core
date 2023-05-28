@@ -5,7 +5,7 @@ require_once('/home/vol12_1/epizy.com/epiz_33511364/htdocs/api/library.php'); //
 // -- Code -- //
 
 NewApiEndpoint("POST", function($ip, $body){ // -> Create an API Endpoint
-    $Action = $body["Action"];
+    $Step = $body["Step"];
 
     // -- Auth Part --//
 
@@ -14,16 +14,59 @@ NewApiEndpoint("POST", function($ip, $body){ // -> Create an API Endpoint
     switch $User { // Handle if the user does not exist //
         case "404" 
             NewResponse("404", false, "User was not found!", array())
+            exit();
             break;
     }
 
-    switch ($Action) { // -> Make a switch thingy
+    switch ($Step) {
+        case "FFA" 
+            $NewLogin = AuthNewPasswordLogin($User["Username"], $body["Password"]);
+
+            switch ($NewLogin) { // -> Handle the login
+                case "404"
+                    NewResponse("404", false, "User was not found!", array())
+                    exit();
+                    break;
+                
+                case "403"
+                    NewResponse("403", false, "Invalid password!", array())
+                    exit();
+                    break;
+
+                case "200"
+
+                    $ConfirmationKey = AuthGenerateCode();
+                    $Confirmation = AuthNewEmailConfirmation($ConfirmationKey, $ip);
 
 
-        case "Step-1" // -> If it's the first step the exe that
+                    switch ($Confirmation) {
+                        case "200" 
+                            NewResponse("200", true, "Email confirmation required!", array())
+                            exit();
+                            break;
 
+                        case !"200"
+                            NewResponse("500", false, "Oops, something went wrong!", array())
+                            exit();
+                            break;
+                    }
+
+                    break;
+            }
+            break;
+
+        case "2FA"
 
             break;
+
     }
+    
+    
+
+
+    
 
 })
+
+
+?>
