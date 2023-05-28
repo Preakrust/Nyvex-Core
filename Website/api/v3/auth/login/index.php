@@ -9,45 +9,39 @@ NewApiEndpoint("POST", function($ip, $body){ // -> Create an API Endpoint
 
     // -- Auth Part --//
 
-    $User = AuthGetDocFromUsername($body["Username"])
+    $User = AuthGetDocFromUsername($body["Username"]);
 
-    switch $User { // Handle if the user does not exist //
-        case "404" 
-            NewResponse("404", false, "User was not found!", array())
-            exit();
+    switch ($User) { // Handle if the user does not exist //
+        case "404";
+            echo NewResponse("404", false, "User was not found!", array());
             break;
     }
 
     switch ($Step) {
-        case "FFA" 
+        case "FFA"; 
             $NewLogin = AuthNewPasswordLogin($User["Username"], $body["Password"]);
 
             switch ($NewLogin) { // -> Handle the login
-                case "404"
-                    NewResponse("404", false, "User was not found!", array())
-                    exit();
-                    break;
                 
-                case "403"
-                    NewResponse("403", false, "Invalid password!", array())
-                    exit();
+                case "403";
+                    echo NewResponse("403", false, "Invalid password!", array());
                     break;
 
-                case "200"
+                case "200";
 
+                    
                     $ConfirmationKey = AuthGenerateCode();
-                    $Confirmation = AuthNewEmailConfirmation($ConfirmationKey, $ip);
+                    $Confirmation = AuthNewEmailConfirmation($User["Username"] ,$ConfirmationKey, $ip);
 
+                    
 
                     switch ($Confirmation) {
-                        case "200" 
-                            NewResponse("200", true, "Email confirmation required!", array())
-                            exit();
+                        case "200";
+                            echo NewResponse("200", true, "Email confirmation required!", array());
                             break;
 
-                        case !"200"
-                            NewResponse("500", false, "Oops, something went wrong!", array())
-                            exit();
+                        case "500";
+                            echo NewResponse("500", false, "Oops, something went wrong!", array());
                             break;
                     }
 
@@ -55,15 +49,11 @@ NewApiEndpoint("POST", function($ip, $body){ // -> Create an API Endpoint
             }
             break;
 
-        case "2FA"
+        case "2FA";
 
             break;
 
     }
-    
-    
-
-
     
 
 })
