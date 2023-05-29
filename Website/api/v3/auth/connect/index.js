@@ -27,7 +27,7 @@ SimpleNotifyScript.setAttribute('src', "https://cdn.jsdelivr.net/npm/simple-noti
 
 SimpleNotifyScript.onload = function() {
 
-    if (getCookie("Nyvex-Core-Connect-Authenticated") != true) {
+    if (getCookie("Nyvex-Core-Connect-Authenticated") != "1") {
         startWidget();
     }
   
