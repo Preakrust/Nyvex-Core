@@ -1,5 +1,22 @@
 // Dependencies //
 
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+
 var SimpleNotifyScript = document.createElement('script');
 var SimpleNotifyCSS = document.createElement("link");
 
@@ -9,7 +26,11 @@ SimpleNotifyCSS.setAttribute('href', "https://cdn.jsdelivr.net/npm/simple-notify
 SimpleNotifyScript.setAttribute('src', "https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js");
 
 SimpleNotifyScript.onload = function() {
-  startWidget();
+
+    if (getCookie("Nyvex-Core-Connect-Authenticated") != true) {
+        startWidget();
+    }
+  
 };
 
 document.head.appendChild(SimpleNotifyScript);
